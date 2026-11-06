@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>TikTok login</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<h1 id="h">TikTok login</h1>
+<p id="msg" class="muted">Checking…</p>
+<textarea id="addr" class="box" rows="4" readonly hidden></textarea>
+<div id="act" hidden>
+<button id="copy" type="button">Copy address</button>
+<p>Then open <a id="wf" href="https://github.com/sunrtswork-source/sktt-daily-briefing/actions/workflows/tiktok_login.yml">SKTT TikTok login</a> › <b>Run workflow</b> › paste into the box › <b>Run workflow</b>. Do it within a few minutes; the code works once.</p>
+<p class="muted">คัดลอกที่อยู่นี้ แล้ววางในช่องของ workflow "SKTT TikTok login" ภายในไม่กี่นาที (ห้ามวางในแชต)</p>
+</div>
+<footer><a href="index.html">Skytailor Poster</a> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></footer>
+</main>
+<script>
+(function(){
+  var q = new URLSearchParams(location.search), msg = document.getElementById('msg');
+  if (q.get('error')) { msg.textContent = 'TikTok did not log in: ' + q.get('error') + ' ' + (q.get('error_description') || ''); return; }
+  if (!q.get('code')) { msg.textContent = 'This page is where TikTok sends you after you tap Authorize. Start from the login link on the workflow page.'; return; }
+  document.getElementById('h').textContent = '✅ TikTok said yes';
+  msg.textContent = 'Copy this whole address:';
+  var a = document.getElementById('addr'); a.value = location.href; a.hidden = false;
+  document.getElementById('act').hidden = false;
+  document.getElementById('copy').onclick = function(){
+    a.select();
+    (navigator.clipboard ? navigator.clipboard.writeText(a.value) : Promise.reject()).catch(function(){ document.execCommand('copy'); });
+    this.textContent = 'Copied ✓';
+  };
+})();
+</script>
+</body></html>
